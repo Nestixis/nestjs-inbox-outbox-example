@@ -18,23 +18,12 @@ async function bootstrap() {
   const cat = new Cat();
   cat.name = 'Mr. Whiskers';
 
-  setInterval(async () => {
-    for (let i = 0; i < 250; i++) {
-      await transactionalEventEmitter.emit(new NewCatEvent(cat.name, true), [
-        {
-          entity: cat,
-          operation: TransactionalEventEmitterOperations.persist,
-        },
-      ]);
-    }
-  }, 10000);
-
-  // await transactionalEventEmitter.emit(new NewCatEvent(cat.name, true), [
-  //   {
-  //     entity: cat,
-  //     operation: TransactionalEventEmitterOperations.persist,
-  //   },
-  // ]);
+  await transactionalEventEmitter.emit(new NewCatEvent(cat.name, true), [
+    {
+      entity: cat,
+      operation: TransactionalEventEmitterOperations.persist,
+    },
+  ]);
 
   await app.listen(3000);
 }
